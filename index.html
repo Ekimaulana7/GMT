@@ -29,8 +29,39 @@
             }
         }
     </script>
+    <style>
+        /* Style Watermark Background Full Screen */
+        .watermark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none; /* Supaya tidak mengganggu klik/interaksi tombol */
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .watermark-text {
+            font-size: 15vw;
+            font-weight: 900;
+            color: rgba(0, 0, 0, 0.03); /* Sangat tipis & transparan */
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transform: rotate(-30deg);
+            white-space: nowrap;
+            user-select: none;
+        }
+    </style>
 </head>
-<body class="font-sans bg-slate-50 text-slate-800 antialiased selection:bg-brand-orange selection:text-white">
+<body class="font-sans bg-slate-50 text-slate-800 antialiased selection:bg-brand-orange selection:text-white relative">
+
+    <!-- WATERMARK FULL SCREEN TIPIS -->
+    <div class="watermark-overlay">
+        <span class="watermark-text">by eki</span>
+    </div>
 
     <!-- HEADER / NAVIGATION -->
     <header class="fixed top-0 left-0 right-0 z-50 bg-brand-navy/90 backdrop-blur-md border-b border-slate-800 text-white">
@@ -314,7 +345,7 @@
             </div>
 
             <div class="pt-8 text-center text-sm text-slate-500">
-                © 2025 PT Ganesha Moda Transport. All Rights Reserved.
+                © 2025 PT Ganesha Moda Transport. All Rights Reserved. Created by <span class="font-semibold text-slate-400">eki</span>.
             </div>
         </div>
     </footer>
