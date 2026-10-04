@@ -50,8 +50,8 @@
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex items-center space-x-8 font-medium text-sm text-slate-300">
                     <a href="#beranda" class="hover:text-white transition-colors">Beranda</a>
+                    <a href="#fitur-utama" class="hover:text-white transition-colors">Cek Tarif & Resi</a>
                     <a href="#layanan" class="hover:text-white transition-colors">Layanan</a>
-                    <a href="#tracking" class="hover:text-white transition-colors">Lacak Resi</a>
                     <a href="#tentang" class="hover:text-white transition-colors">Tentang Kami</a>
                     <a href="#kontak" class="hover:text-white transition-colors">Kontak</a>
                 </nav>
@@ -78,7 +78,7 @@
             <div class="absolute inset-0 bg-gradient-to-r from-brand-navy/95 via-brand-navy/80 to-brand-navy/40"></div>
         </div>
 
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-white">
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-white">
             <div class="max-w-3xl space-y-6">
                 <!-- Tagline Badge -->
                 <div class="inline-flex items-center gap-2 bg-brand-orange/20 border border-brand-orange/40 text-brand-orange px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase backdrop-blur-sm">
@@ -93,14 +93,14 @@
 
                 <!-- Subtitle -->
                 <p class="text-lg sm:text-xl text-slate-300 font-normal leading-relaxed">
-                    Solusi terintegrasi angkutan darat dan laut dengan keandalan operasional nasional, tracking real-time, dan standar keamanan kargo terdepan.
+                    Solusi terintegrasi angkutan darat dan laut dengan keandalan operasional nasional, tracking real-time, dan estimasi biaya tembus transparan.
                 </p>
 
                 <!-- CTA Buttons -->
-                <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                    <a href="#tracking" class="bg-brand-orange hover:bg-orange-600 text-white font-bold px-8 py-4 rounded-xl shadow-xl shadow-brand-orange/25 text-center transition-all flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <span>Lacak Resi / STT</span>
+                <div class="flex flex-col sm:flex-row gap-4 pt-2">
+                    <a href="#fitur-utama" class="bg-brand-orange hover:bg-orange-600 text-white font-bold px-8 py-4 rounded-xl shadow-xl shadow-brand-orange/25 text-center transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span>Cek Estimasi Tarif & Resi</span>
                     </a>
                     <a href="#kontak" class="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold px-8 py-4 rounded-xl text-center backdrop-blur-md transition-all flex items-center justify-center gap-2">
                         <i class="fa-regular fa-paper-plane"></i>
@@ -111,26 +111,76 @@
         </div>
     </section>
 
-    <!-- TRACKING & ESTIMATE SECTION -->
-    <section id="tracking" class="relative z-20 -mt-12 max-w-5xl mx-auto px-4">
+    <!-- WIDGET TAB: LACAK RESI & ESTIMASI BIAYA -->
+    <section id="fitur-utama" class="relative z-20 -mt-16 max-w-5xl mx-auto px-4">
         <div class="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 border border-slate-100">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="w-full md:w-1/3">
-                    <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-location-dot text-brand-orange"></i>
-                        <span>Lacak Pengiriman</span>
-                    </h2>
-                    <p class="text-sm text-slate-500 mt-1">Masukkan Nomor Resi / STT Anda untuk cek status pengiriman.</p>
-                </div>
-                <div class="w-full md:w-2/3">
-                    <form onsubmit="event.preventDefault();" class="flex flex-col sm:flex-row gap-3">
-                        <input type="text" placeholder="Contoh: GMT-2024-JKT994" class="flex-1 px-4 py-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent text-slate-800 placeholder-slate-400 font-medium">
-                        <button type="submit" class="bg-brand-navy hover:bg-brand-blue text-white font-bold px-6 py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 whitespace-nowrap">
-                            <i class="fa-solid fa-search"></i>
-                            <span>Lacak Resi</span>
+            <!-- Navigation Tabs -->
+            <div class="flex border-b border-slate-200 mb-6 gap-6">
+                <button id="btn-tab-tarif" onclick="switchTab('tarif')" class="pb-3 text-base font-bold text-brand-orange border-b-2 border-brand-orange flex items-center gap-2 transition-all">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span>Cek Estimasi Biaya</span>
+                </button>
+                <button id="btn-tab-resi" onclick="switchTab('resi')" class="pb-3 text-base font-bold text-slate-400 hover:text-slate-600 border-b-2 border-transparent flex items-center gap-2 transition-all">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Lacak Pengiriman (Resi)</span>
+                </button>
+            </div>
+
+            <!-- Content 1: Cek Estimasi Biaya -->
+            <div id="tab-tarif" class="block">
+                <form onsubmit="hitungTarif(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase mb-2">Kota Asal</label>
+                        <select id="asal" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-orange font-medium text-slate-800">
+                            <option value="Bandung">Bandung</option>
+                            <option value="Jakarta">Jakarta</option>
+                            <option value="Surabaya">Surabaya</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase mb-2">Kota Tujuan</label>
+                        <select id="tujuan" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-orange font-medium text-slate-800">
+                            <option value="Surabaya">Surabaya</option>
+                            <option value="Medan">Medan (Via Laut)</option>
+                            <option value="Makassar">Makassar (Via Laut)</option>
+                            <option value="Jakarta">Jakarta</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase mb-2">Berat / Volume (Kg)</label>
+                        <input type="number" id="berat" placeholder="Min. 50 kg" min="1" value="100" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-orange font-medium text-slate-800">
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit" class="w-full bg-brand-orange hover:bg-orange-600 text-white font-bold py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-calculator"></i>
+                            <span>Hitung Biaya</span>
                         </button>
-                    </form>
+                    </div>
+                </form>
+
+                <!-- Hasil Perhitungan -->
+                <div id="hasil-tarif" class="hidden mt-6 p-4 bg-slate-50 rounded-xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div>
+                        <span class="text-xs text-slate-500 font-semibold block uppercase">Estimasi Total Biaya</span>
+                        <span id="text-biaya" class="text-2xl font-black text-brand-navy">Rp 0</span>
+                        <p class="text-xs text-slate-400 mt-0.5">*Harga bersifat estimasi reguler, belum termasuk asuransi & packing kayu.</p>
+                    </div>
+                    <a id="btn-wa-quote" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-5 py-2.5 rounded-lg transition-all flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>Pesan Rute Ini via WA</span>
+                    </a>
                 </div>
+            </div>
+
+            <!-- Content 2: Lacak Resi -->
+            <div id="tab-resi" class="hidden">
+                <form onsubmit="event.preventDefault(); alert('Nomor Resi sedang diproses dalam sistem.');" class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" placeholder="Masukkan No. STT / Resi (Contoh: GMT-2024-JKT994)" class="flex-1 px-4 py-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-orange text-slate-800 font-medium">
+                    <button type="submit" class="bg-brand-navy hover:bg-brand-blue text-white font-bold px-8 py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-search"></i>
+                        <span>Cek Status</span>
+                    </button>
+                </form>
             </div>
         </div>
     </section>
@@ -269,5 +319,47 @@
         </div>
     </footer>
 
+    <!-- JAVASCRIPT UNTUK TAB SCRIPT & KALKULATOR -->
+    <script>
+        function switchTab(tab) {
+            const btnTarif = document.getElementById('btn-tab-tarif');
+            const btnResi = document.getElementById('btn-tab-resi');
+            const tabTarif = document.getElementById('tab-tarif');
+            const tabResi = document.getElementById('tab-resi');
+
+            if (tab === 'tarif') {
+                btnTarif.className = "pb-3 text-base font-bold text-brand-orange border-b-2 border-brand-orange flex items-center gap-2 transition-all";
+                btnResi.className = "pb-3 text-base font-bold text-slate-400 hover:text-slate-600 border-b-2 border-transparent flex items-center gap-2 transition-all";
+                tabTarif.classList.remove('hidden');
+                tabResi.classList.add('hidden');
+            } else {
+                btnResi.className = "pb-3 text-base font-bold text-brand-orange border-b-2 border-brand-orange flex items-center gap-2 transition-all";
+                btnTarif.className = "pb-3 text-base font-bold text-slate-400 hover:text-slate-600 border-b-2 border-transparent flex items-center gap-2 transition-all";
+                tabResi.classList.remove('hidden');
+                tabTarif.classList.add('hidden');
+            }
+        }
+
+        function hitungTarif(e) {
+            e.preventDefault();
+            const asal = document.getElementById('asal').value;
+            const tujuan = document.getElementById('tujuan').value;
+            const berat = parseFloat(document.getElementById('berat').value) || 0;
+
+            let tarifPerKg = 2500;
+            if (tujuan === 'Medan') tarifPerKg = 5500;
+            if (tujuan === 'Makassar') tarifPerKg = 6000;
+            if (tujuan === 'Surabaya') tarifPerKg = 3000;
+
+            const total = berat * tarifPerKg;
+            const totalFormatted = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(total);
+
+            document.getElementById('text-biaya').innerText = totalFormatted;
+            document.getElementById('hasil-tarif').classList.remove('hidden');
+
+            const textWA = `Halo GMT, saya ingin bertanya pengiriman dari ${asal} ke ${tujuan} dengan estimasi berat ${berat} kg.`;
+            document.getElementById('btn-wa-quote').href = `https://wa.me/6285179962639?text=${encodeURIComponent(textWA)}`;
+        }
+    </script>
 </body>
 </html>
