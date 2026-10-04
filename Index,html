@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PT Ganesha Moda Transport - Logistik & Freight Forwarder</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            800: '#1A365D',
+                            900: '#0F2942',
+                        },
+                        gold: {
+                            500: '#D97706',
+                            600: '#B45309',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="bg-navy-900 text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-gold-500 p-2 rounded-lg text-navy-900 font-bold text-xl">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg tracking-wider leading-tight">PT GANESHA MODA TRANSPORT</h1>
+                    <p class="text-xs text-gray-300">Land & Maritime Freight Logistics</p>
+                </div>
+            </div>
+            
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="#home" class="hover:text-gold-500 transition">Beranda</a>
+                <a href="#layanan" class="hover:text-gold-500 transition">Layanan</a>
+                <a href="#tentang" class="hover:text-gold-500 transition">Tentang Kami</a>
+                <a href="#kontak" class="hover:text-gold-500 transition">Kontak</a>
+            </nav>
+
+            <a href="https://wa.me/6285179962639?text=Halo%20PT%20Ganesha%20Moda%20Transport,%20saya%20ingin%20minta%20penawaran%20tarif." 
+               target="_blank" 
+               class="bg-gold-500 hover:bg-gold-600 text-navy-900 font-bold px-4 py-2 rounded-lg text-sm transition flex items-center space-x-2">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span class="hidden sm:inline">Minta Penawaran</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="relative bg-navy-900 text-white py-16 px-4">
+        <div class="max-w-5xl mx-auto text-center">
+            <span class="bg-navy-800 text-gold-500 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider border border-gold-500/30">
+                Powering Safe & Reliable Supply Chains
+            </span>
+            <h2 class="text-3xl md:text-5xl font-extrabold mt-4 mb-4 leading-tight">
+                Connecting Businesses, Regions, and Opportunities Through Land and Sea
+            </h2>
+            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base mb-8">
+                Solusi terintegrasi angkutan darat dan laut dengan keandalan operasional nasional, tracking real-time, dan standar keamanan kargo terdepan.
+            </p>
+        </div>
+
+        <!-- WIDGET INTERAKTIF (TRACKING & KALKULATOR) -->
+        <div class="max-w-3xl mx-auto bg-white text-gray-800 rounded-xl shadow-2xl p-6 border border-gray-100">
+            <!-- TAB BUTTONS -->
+            <div class="flex border-b border-gray-200 mb-6">
+                <button id="btnTabTracking" onclick="switchTab('tracking')" class="flex-1 py-3 text-center font-bold text-navy-900 border-b-2 border-gold-500 transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-location-crosshairs text-gold-500"></i>
+                    <span>Lacak Resi / STT</span>
+                </button>
+                <button id="btnTabCalculator" onclick="switchTab('calculator')" class="flex-1 py-3 text-center font-bold text-gray-500 border-b-2 border-transparent hover:text-navy-900 transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span>Cek Tarif Estimasi</span>
+                </button>
+            </div>
+
+            <!-- TAB 1: TRACKING RESI -->
+            <div id="tabTracking" class="block">
+                <div class="flex flex-col sm:flex-row gap-3 mb-4">
+                    <input type="text" id="inputSTT" placeholder="Masukkan Nomor STT (Contoh: GMT-2024-JKT994)" 
+                           value="GMT-2024-JKT994" 
+                           class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-900 text-sm">
+                    <button onclick="trackSTT()" class="bg-navy-900 hover:bg-navy-800 text-white font-bold px-6 py-3 rounded-lg text-sm transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Lacak Resi</span>
+                    </button>
+                </div>
+
+                <!-- PRESET DUMMY RESI FOR TESTING -->
+                <div class="text-xs text-gray-500 mb-4 flex items-center space-x-2">
+                    <span>Coba No. Resi Dummy:</span>
+                    <button onclick="setSTT('GMT-2024-JKT994')" class="text-gold-600 underline hover:text-navy-900">GMT-2024-JKT994</button> |
+                    <button onclick="setSTT('GMT-2024-BND002')" class="text-gold-600 underline hover:text-navy-900">GMT-2024-BND002</button>
+                </div>
+
+                <!-- RESULT PANEL -->
+                <div id="trackingResult" class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <!-- Loaded dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- TAB 2: KALKULATOR TARIF -->
+            <div id="tabCalculator" class="hidden">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Rute Pengiriman</label>
+                        <select id="selectRoute" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy-900">
+                            <option value="1500">Jakarta ➔ Surabaya (Darat / Truk)</option>
+                            <option value="3500">Jakarta ➔ Makassar (Laut / Kapal)</option>
+                            <option value="2500">Bandung ➔ Medan (Laut / Kapal)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Berat Cargo (Kg)</label>
+                        <input type="number" id="inputWeight" value="100" min="1" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy-900">
+                    </div>
+                </div>
+                <button onclick="calculateFreight()" class="w-full bg-gold-500 hover:bg-gold-600 text-navy-900 font-bold py-3 rounded-lg text-sm transition">
+                    Hitung Estimasi Biaya
+                </button>
+
+                <div id="calculatorResult" class="mt-4 p-4 bg-navy-900 text-white rounded-lg hidden text-center">
+                    <p class="text-xs text-gray-300">Estimasi Total Biaya:</p>
+                    <p id="totalPrice" class="text-2xl font-extrabold text-gold-500 my-1">Rp 0</p>
+                    <p class="text-xs text-gray-400">*Belum termasuk asuransi & biaya bongkar muat khusus.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KEY STATS SECTION -->
+    <section class="py-10 bg-white border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div class="p-4 border rounded-xl hover:shadow-md transition">
+                <h3 class="text-3xl font-extrabold text-navy-900">15+</h3>
+                <p class="text-xs text-gray-500 mt-1 font-medium">Tahun Pengalaman</p>
+            </div>
+            <div class="p-4 border rounded-xl hover:shadow-md transition">
+                <h3 class="text-3xl font-extrabold text-navy-900">250+</h3>
+                <p class="text-xs text-gray-500 mt-1 font-medium">Unit Armada Aktif</p>
+            </div>
+            <div class="p-4 border rounded-xl hover:shadow-md transition">
+                <h3 class="text-3xl font-extrabold text-navy-900">48+</h3>
+                <p class="text-xs text-gray-500 mt-1 font-medium">Kota & Pelabuhan</p>
+            </div>
+            <div class="p-4 border rounded-xl hover:shadow-md transition">
+                <h3 class="text-3xl font-extrabold text-gold-500">99.4%</h3>
+                <p class="text-xs text-gray-500 mt-1 font-medium">On-Time Delivery SLA</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- LAYANAN UTAMA -->
+    <section id="layanan" class="py-16 max-w-6xl mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-navy-900">Layanan Utama Logistik</h2>
+            <p class="text-gray-600 text-sm mt-2">Solusi pengiriman kargo dan rantai pasok terintegrasi untuk bisnis Anda.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- CARD 1 -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-lg transition">
+                <div class="w-12 h-12 bg-navy-900 text-gold-500 rounded-lg flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-truck-front"></i>
+                </div>
+                <h3 class="font-bold text-lg text-navy-900 mb-2">Angkutan Darat (Trucking)</h3>
+                <p class="text-gray-600 text-xs leading-relaxed mb-4">
+                    Layanan FTL & LTL menggunakan Wingbox, Trailer Flatbed 20/40ft, Tronton, dan CDD/CDE.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">Wingbox Jumbo</span>
+                    <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">Trailer 40ft</span>
+                </div>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-lg transition">
+                <div class="w-12 h-12 bg-navy-900 text-gold-500 rounded-lg flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-ship"></i>
+                </div>
+                <h3 class="font-bold text-lg text-navy-900 mb-2">Angkutan Laut (Maritime Cargo)</h3>
+                <p class="text-gray-600 text-xs leading-relaxed mb-4">
+                    Ekspedisi kontainer FCL & LCL ke pulau Sumatera, Kalimantan, Sulawesi, hingga Papua.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">FCL / LCL</span>
+                    <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">Kapal Roro Express</span>
+                </div>
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-lg transition">
+                <div class="w-12 h-12 bg-navy-900 text-gold-500 rounded-lg flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-warehouse"></i>
+                </div>
+                <h3 class="font-bold text-lg text-navy-900 mb-2">Pergudangan & Staging</h3>
+                <p class="text-gray-600 text-xs leading-relaxed mb-4">
+                    Fasilitas gudang transit strategis di koridor Bandung, Jakarta, dan Surabaya berbasis WMS digital.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">Cross-docking</span>
+                    <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">Last-Mile</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER & KONTAK -->
+    <footer id="kontak" class="bg-navy-900 text-white pt-12 pb-6 border-t border-navy-800">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div>
+                <h3 class="font-extrabold text-lg mb-3 text-gold-500">PT GANESHA MODA TRANSPORT</h3>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    Penyedia jasa logistik multimoda darat dan laut dengan kehandalan tanpa kompromi ke seluruh penjuru kepulauan Indonesia.
+                </p>
+            </div>
+            <div>
+                <h4 class="font-bold text-sm mb-3">Kantor Operasional</h4>
+                <p class="text-xs text-gray-300 leading-relaxed flex items-start space-x-2">
+                    <i class="fa-solid fa-location-dot mt-1 text-gold-500"></i>
+                    <span>Jl. Sunda No.85, Kebon Pisang, Kec. Sumur Bandung, Kota Bandung, Jawa Barat 40112</span>
+                </p>
+                <p class="text-xs text-gray-300 mt-2 flex items-center space-x-2">
+                    <i class="fa-solid fa-phone text-gold-500"></i>
+                    <span>+62 851-7996-2639</span>
+                </p>
+                <p class="text-xs text-gray-300 mt-1 flex items-center space-x-2">
+                    <i class="fa-solid fa-envelope text-gold-500"></i>
+                    <span>phoulygmlogistik@gmail.com</span>
+                </p>
+            </div>
+            <div>
+                <h4 class="font-bold text-sm mb-3">Update Buletin Logistik</h4>
+                <div class="flex">
+                    <input type="email" id="emailSubscribe" placeholder="Email korporat Anda" class="px-3 py-2 text-xs rounded-l text-gray-800 focus:outline-none w-full">
+                    <button onclick="subscribeNewsletter()" class="bg-gold-500 hover:bg-gold-600 text-navy-900 font-bold px-4 text-xs rounded-r transition">
+                        Kirim
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-navy-800 pt-4 text-center text-xs text-gray-500">
+            © 2025 PT Ganesha Moda Transport. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT FOR INTERACTIVITY & DUMMY DATA -->
+    <script>
+        // DATA DUMMY TRACKING RESI
+        const dummyShipments = {
+            "GMT-2024-JKT994": {
+                status: "IN TRANSIT",
+                statusColor: "bg-blue-100 text-blue-800",
+                moda: "Laut (Kapal FCL)",
+                eta: "Besok, 18:30 WIB",
+                origin: "Pelabuhan Tanjung Priok (JKT)",
+                destination: "Pelabuhan Soekarno-Hatta (MKS)",
+                step: "Selat Makassar (On Vessels)",
+                seal: "ID-88219-0"
+            },
+            "GMT-2024-BND002": {
+                status: "DELIVERED",
+                statusColor: "bg-green-100 text-green-800",
+                moda: "Darat (Truk Wingbox)",
+                eta: "Selesai (Hari ini, 10:15 WIB)",
+                origin: "Hub Bandung",
+                destination: "Gudang Konsumen (Surabaya)",
+                step: "Tiba di Alamat Tujuan",
+                seal: "ID-99012-A"
+            }
+        };
+
+        // TAB SWITCHER FUNCTION
+        function switchTab(tabName) {
+            const tabTracking = document.getElementById('tabTracking');
+            const tabCalculator = document.getElementById('tabCalculator');
+            const btnTabTracking = document.getElementById('btnTabTracking');
+            const btnTabCalculator = document.getElementById('btnTabCalculator');
+
+            if (tabName === 'tracking') {
+                tabTracking.classList.remove('hidden');
+                tabCalculator.classList.add('hidden');
+                
+                btnTabTracking.className = "flex-1 py-3 text-center font-bold text-navy-900 border-b-2 border-gold-500 transition flex items-center justify-center space-x-2";
+                btnTabCalculator.className = "flex-1 py-3 text-center font-bold text-gray-500 border-b-2 border-transparent hover:text-navy-900 transition flex items-center justify-center space-x-2";
+            } else {
+                tabTracking.classList.add('hidden');
+                tabCalculator.classList.remove('hidden');
+
+                btnTabCalculator.className = "flex-1 py-3 text-center font-bold text-navy-900 border-b-2 border-gold-500 transition flex items-center justify-center space-x-2";
+                btnTabTracking.className = "flex-1 py-3 text-center font-bold text-gray-500 border-b-2 border-transparent hover:text-navy-900 transition flex items-center justify-center space-x-2";
+            }
+        }
+
+        // QUICK SET RESI
+        function setSTT(sttNo) {
+            document.getElementById('inputSTT').value = sttNo;
+            trackSTT();
+        }
+
+        // TRACKING FUNCTION
+        function trackSTT() {
+            const sttInput = document.getElementById('inputSTT').value.trim();
+            const resultDiv = document.getElementById('trackingResult');
+
+            if (dummyShipments[sttInput]) {
+                const data = dummyShipments[sttInput];
+                resultDiv.innerHTML = `
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="font-extrabold text-navy-900">${sttInput}</span>
+                        <span class="px-2.5 py-1 rounded-full text-xs font-bold ${data.statusColor}">${data.status}</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-xs mb-3 text-gray-600">
+                        <div><strong class="text-gray-800">Moda:</strong> ${data.moda}</div>
+                        <div><strong class="text-gray-800">ETA:</strong> ${data.eta}</div>
+                        <div><strong class="text-gray-800">Asal:</strong> ${data.origin}</div>
+                        <div><strong class="text-gray-800">Tujuan:</strong> ${data.destination}</div>
+                    </div>
+                    <div class="bg-white p-2.5 rounded border border-gray-200 text-xs">
+                        <p class="text-gray-500">Posisi Saat Ini:</p>
+                        <p class="font-bold text-navy-900"><i class="fa-solid fa-location-dot text-gold-500 mr-1"></i> ${data.step}</p>
+                        <p class="text-gray-400 text-[10px] mt-1">No. Seal Container: ${data.seal}</p>
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="text-center py-4 text-red-500 text-xs">
+                        <i class="fa-solid fa-circle-exclamation text-lg mb-1"></i>
+                        <p>Nomor STT tidak ditemukan. Pastikan format benar (contoh: GMT-2024-JKT994).</p>
+                    </div>
+                `;
+            }
+        }
+
+        // CALCULATOR FUNCTION
+        function calculateFreight() {
+            const ratePerKg = parseFloat(document.getElementById('selectRoute').value);
+            const weight = parseFloat(document.getElementById('inputWeight').value) || 0;
+            const totalPrice = ratePerKg * weight;
+
+            const resultPanel = document.getElementById('calculatorResult');
+            const priceText = document.getElementById('totalPrice');
+
+            priceText.innerText = "Rp " + totalPrice.toLocaleString('id-ID');
+            resultPanel.classList.remove('hidden');
+        }
+
+        // SUBSCRIBE NEWSLETTER
+        function subscribeNewsletter() {
+            const email = document.getElementById('emailSubscribe').value;
+            if (email) {
+                alert('Terima kasih! Email ' + email + ' berhasil terdaftar.');
+                document.getElementById('emailSubscribe').value = '';
+            } else {
+                alert('Silakan masukkan email Anda.');
+            }
+        }
+
+        // INITIAL LOAD
+        window.onload = function() {
+            trackSTT();
+        };
+    </script>
+</body>
+</html>
